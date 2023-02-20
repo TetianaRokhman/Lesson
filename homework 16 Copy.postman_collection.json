@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "5be8c8d5-e57a-4560-9603-a0935cdd884f",
+		"name": "homework 16 Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25365218"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\":\"burnikaaa@test.ua\",\n  \"password\": \"Qwerty12345\",\n  \"remember\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{my_URL}}auth/signin",
+					"protocol": "https",
+					"host": [
+						"{{my_URL}}auth"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add new car",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Car brand check\", function () {",
+							"    pm.expect(jsonData.data.carBrandId).to.eql(5);",
+							"    pm.expect(jsonData.data.brand).to.eql(\"Fiat\");",
+							"    pm.collectionVariables.set(\"car_id\",jsonData.data.id);",
+							"    pm.collectionVariables.set(\"date\",jsonData.data.carCreatedAt);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"carBrandId\": 5,\n  \"carModelId\": 21,\n  \"mileage\": 122\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{my_URL}}cars",
+					"protocol": "https",
+					"host": [
+						"{{my_URL}}cars"
+					],
+					"query": [
+						{
+							"key": "carBrandId",
+							"value": "5",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create expenses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"expenses\",jsonData.data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"carId\":{{car_id}},\n  \"reportedAt\": \"{{date}}\",\n  \"mileage\": 1121,\n  \"liters\": 111,\n  \"totalCost\": 111,\n  \"forceMileage\": false\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{my_URL}}expenses",
+					"protocol": "https",
+					"host": [
+						"{{my_URL}}expenses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update expenses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"carId\":{{car_id}},\n  \"reportedAt\": \"{{date}}\",\n  \"mileage\": 1123,\n  \"liters\": 200,\n  \"totalCost\": 1551,\n  \"forceMileage\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{my_URL}}expenses/{{expenses}}",
+					"protocol": "https",
+					"host": [
+						"{{my_URL}}expenses"
+					],
+					"path": [
+						"{{expenses}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete expenses",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://{{my_URL}}expenses/{{car_id}}",
+					"protocol": "https",
+					"host": [
+						"{{my_URL}}expenses"
+					],
+					"path": [
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get expenses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{my_URL}}expenses",
+					"protocol": "https",
+					"host": [
+						"{{my_URL}}expenses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete car",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://{{my_URL}}cars/{{car_id}}",
+					"protocol": "https",
+					"host": [
+						"{{my_URL}}cars"
+					],
+					"path": [
+						"{{car_id}}"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get car by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{my_URL}}cars/{{car_id}}",
+					"protocol": "https",
+					"host": [
+						"{{my_URL}}cars"
+					],
+					"path": [
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{my_URL}}auth/logout",
+					"protocol": "https",
+					"host": [
+						"{{my_URL}}auth"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "my_URL",
+			"value": "qauto2.forstudy.space/api/",
+			"type": "string"
+		},
+		{
+			"key": "car_id",
+			"value": ""
+		},
+		{
+			"key": "date",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "expenses",
+			"value": ""
+		},
+		{
+			"key": "liters",
+			"value": ""
+		}
+	]
+}
